@@ -14,7 +14,7 @@ Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout'
 
 //category
 Route::post('/seller/category', [App\Http\Controllers\Api\CategoryController::class, 'store'])->middleware('auth:sanctum');
-Route::post('/seller/categories', [App\Http\Controllers\Api\CategoryController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/seller/categories', [App\Http\Controllers\Api\CategoryController::class, 'index'])->middleware('auth:sanctum');
 
 //product
 Route::get('/seller/products', [App\Http\Controllers\Api\ProductController::class, 'index'])->middleware('auth:sanctum');
