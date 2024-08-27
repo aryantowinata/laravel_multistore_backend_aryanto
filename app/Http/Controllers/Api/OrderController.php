@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Models\OrderItem;
+use App\Models\Orderitem;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\Midtrans\CreateVaService;
@@ -53,7 +53,7 @@ class OrderController extends Controller
         foreach ($request->items as $item) {
 
             $product = Product::find($item['product_id']);
-            OrderItem::create([
+            Orderitem::create([
                 'order_id' => $order->id,
                 'product_id' => $item['product_id'],
                 'price' => $product->price,
