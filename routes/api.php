@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CallbackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,13 @@ Route::put('/seller/orders/{id}/update-resi', [App\Http\Controllers\Api\OrderCon
 Route::get('/buyer/histories', [App\Http\Controllers\Api\OrderController::class, 'historyOrderBuyer'])->middleware('auth:sanctum');
 Route::get('/seller/orders', [App\Http\Controllers\Api\OrderController::class, 'historyOrderSeller'])->middleware('auth:sanctum');
 Route::get('/buyer/stores/livestreaming', [App\Http\Controllers\Api\StoreController::class, 'livestreaming'])->middleware('auth:sanctum');
+
+//callback
+Route::post('/midtrans/callback', [CallbackController::class, 'callback']);
+
+
+//check order status
+Route::get('/buyer/orders/{id}/status', [App\Http\Controllers\Api\OrderController::class, 'checkOrderStatus'])->middleware('auth:sanctum');
+
+//get order by id
+Route::get('/orders/{id}', [App\Http\Controllers\Api\OrderController::class, 'getOrderById'])->middleware('auth:sanctum');
