@@ -4,8 +4,7 @@ namespace App\Services\Midtrans;
 
 use Midtrans\Config;
 
-class Midtrans
-{
+class Midtrans {
     protected $serverKey;
     protected $isProduction;
     protected $isSanitized;
