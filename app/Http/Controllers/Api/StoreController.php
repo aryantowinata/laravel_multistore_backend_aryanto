@@ -40,4 +40,18 @@ class StoreController extends Controller
             'data' => $stores,
         ]);
     }
+
+    public function setLivestreaming(Request $request)
+    {
+        $id = $request->user()->id;
+        $store = User::find($id);
+        $isActive = $request->is_active;
+        $store->update([
+            'is_livestreaming' => $isActive,
+        ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Store is livestreaming',
+        ]);
+    }
 }
