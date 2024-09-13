@@ -30,7 +30,8 @@ class User extends Authenticatable
         'postal_code',
         'roles',
         'photo',
-        'is_livestreaming'
+        'is_livestreaming',
+        'fcm_token'
     ];
 
     /**
@@ -61,7 +62,8 @@ class User extends Authenticatable
         return $this->hasMany(Product::class);
     }
 
-    public function addresses(){
+    public function addresses()
+    {
         return $this->hasMany(Address::class);
     }
 }
