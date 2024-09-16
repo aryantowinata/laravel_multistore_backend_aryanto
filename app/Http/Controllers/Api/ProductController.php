@@ -113,4 +113,20 @@ class ProductController extends Controller
             'message' => 'Product deleted',
         ]);
     }
+
+    public function countBySeller(Request $request)
+    {
+        $sellerId = $request->user()->id; // Assuming you're counting for the authenticated seller
+
+        $count = Product::where('seller_id', $sellerId)->count();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product count for seller',
+            'data' => [
+                'seller_id' => $sellerId,
+                'product_count' => $count,
+            ],
+        ]);
+    }
 }

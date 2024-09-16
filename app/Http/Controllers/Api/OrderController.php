@@ -160,4 +160,18 @@ class OrderController extends Controller
             'data' => $order,
         ]);
     }
+
+    // public function countOrderSeller(Request $request)
+    // {
+    //     $user = $request->user(); // Mendapatkan data user yang sedang login
+    //     $count = Order::where('seller_id', $user->id)->count(); // Menghitung jumlah order berdasarkan seller_id
+
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'message' => 'Total orders by seller',
+    //         'data' => [
+    //             'total_orders' => $count,
+    //         ]
+    //     ]);
+    // }
 }
