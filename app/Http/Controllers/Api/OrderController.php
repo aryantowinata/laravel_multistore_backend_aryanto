@@ -126,6 +126,8 @@ class OrderController extends Controller
     {
         $user = $request->user();
         $orders = Order::where('user_id', $user->id)->get();
+        //load user
+        $orders->load('user');
         return response()->json([
             'status' => 'success',
             'message' => 'List History Order Buyer',
