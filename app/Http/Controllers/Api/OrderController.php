@@ -126,7 +126,6 @@ class OrderController extends Controller
     {
         $user = $request->user();
         $orders = Order::where('user_id', $user->id)->get();
-
         return response()->json([
             'status' => 'success',
             'message' => 'List History Order Buyer',
@@ -134,13 +133,14 @@ class OrderController extends Controller
         ]);
     }
 
+
     //history order seller
     public function historyOrderSeller(Request $request)
     {
         $user = $request->user();
         $orders = Order::where('seller_id', $user->id)->get();
         //load user
-        $orders->load('user');
+        $orders->load('user', 'orderItems.product');
         return response()->json([
             'status' => 'success',
             'message' => 'List History Order Seller',
@@ -160,7 +160,7 @@ class OrderController extends Controller
     //get order by id
     public function getOrderById($id)
     {
-        $order = Order::with('orderItems.product')->find($id);
+        $order = Order::with('orderItems.product', 'address.user')->find($id);
         return response()->json([
             'status' => 'success',
             'message' => 'Order',
