@@ -58,3 +58,16 @@ Route::post('/seller/livestreaming', [App\Http\Controllers\Api\StoreController::
 
 //update fcm token
 Route::put('/update-fcm-token', [App\Http\Controllers\Api\AuthController::class, 'updateFcmToken'])->middleware('auth:sanctum');
+
+
+// Get profile for seller
+Route::get('/seller/profile', [App\Http\Controllers\Api\AuthController::class, 'getSellerProfile'])->middleware('auth:sanctum');
+
+// Update profile for seller
+Route::post('/seller/profile/update', [App\Http\Controllers\Api\AuthController::class, 'updateSellerProfile'])->middleware('auth:sanctum');
+
+// Get profile for buyer
+Route::get('/buyer/profile', [App\Http\Controllers\Api\AuthController::class, 'getBuyerProfile'])->middleware('auth:sanctum');
+
+// Update profile for buyer
+Route::post('/buyer/profile/update', [App\Http\Controllers\Api\AuthController::class, 'updateBuyerProfile'])->middleware('auth:sanctum');

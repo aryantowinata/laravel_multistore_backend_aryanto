@@ -130,4 +130,127 @@ class AuthController extends Controller
             'message' => 'FCM token updated'
         ], 200);
     }
+
+    public function getSellerProfile(Request $request)
+    {
+        $user = $request->user();
+
+        // Pastikan user adalah seller
+        if ($user->roles !== 'seller') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Seller profile retrieved',
+            'data' => $user,
+        ], 200);
+    }
+
+    public function updateSellerProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'sometimes|string',
+            'email' => 'sometimes|email|unique:users,email,' . $request->user()->id,
+            'phone' => 'sometimes|string',
+            'address' => 'sometimes|string',
+            'country' => 'sometimes|string',
+            'province' => 'sometimes|string',
+            'city' => 'sometimes|string',
+            'district' => 'sometimes|string',
+            'postal_code' => 'sometimes|string',
+            'photo' => 'sometimes|image',
+        ]);
+
+        $user = $request->user();
+
+        // Pastikan user adalah seller
+        if ($user->roles !== 'seller') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        // Update photo if provided
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo')->store('assets/user', 'public');
+            $user->photo = $photo;
+        }
+
+        // Update the rest of the profile fields including email
+        $user->update($request->only([
+            'name',
+            'email',
+            'phone',
+            'address',
+            'country',
+            'province',
+            'city',
+            'district',
+            'postal_code'
+        ]));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Seller profile updated',
+            'data' => $user,
+        ], 200);
+    }
+
+    public function getBuyerProfile(Request $request)
+    {
+        $user = $request->user();
+
+        // Pastikan user adalah buyer
+        if ($user->roles !== 'buyer') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Buyer profile retrieved',
+            'data' => $user,
+        ], 200);
+    }
+
+    public function updateBuyerProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'sometimes|string',
+            'email' => 'sometimes|email|unique:users,email,' . $request->user()->id,
+            'phone' => 'sometimes|string',
+            'address' => 'sometimes|string',
+        ]);
+
+        $user = $request->user();
+
+        // Pastikan user adalah buyer
+        if ($user->roles !== 'buyer') {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        // Update the rest of the profile fields including email
+        $user->update($request->only([
+            'name',
+            'email',
+            'phone',
+            'address'
+        ]));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Buyer profile updated',
+            'data' => $user,
+        ], 200);
+    }
 }
